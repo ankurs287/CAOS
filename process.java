@@ -4,11 +4,13 @@ class Process
 	int waitTime;
 	int burstTime;
 	int turnAroundTime;
+	int remBurstTime;
 
 	public Process(int meanBurstTime, int meanArrivalTime)
 	{
 		burstTime=getPoisson(10.0);
 		arrivalTime=getExponential(10.0);
+		remBurstTime=burstTime;
 	}
 
 	public static int getPoisson(double lambda) 

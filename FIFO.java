@@ -16,6 +16,8 @@ class FIFO
 		ArrayList<Process> q=new ArrayList<Process>();
 		int tt=100, count=0;
 
+		Collections.sort(processes, SORT_BY_ARRIVALTIME);
+
 		while(count<tt)
 		{
 			for(int i=0;i<numofprocess;i++)
@@ -24,7 +26,7 @@ class FIFO
 				{
 					q.add(processes.get(i));
 				}
-				// else break;
+				else break;
 			}
 
 			if(q.size()!=0)
@@ -32,6 +34,7 @@ class FIFO
 				q.get(0).waitTime=count-arrivalTime;
 				q.get(0).turnAroundTime=q.get(0).burstTime+q.get(i).waitTime;
 				count+=	q.get(0).burstTime;
+				q.remove(0);
 			}
 		}
 	}

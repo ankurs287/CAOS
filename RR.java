@@ -1,4 +1,4 @@
-class SJf
+class RR
 {
 	static ArrayList<Process> processes=new ArrayList<Process>();
 	public static void main(String[] args) 
@@ -16,7 +16,7 @@ class SJf
 		ArrayList<Process> q=new ArrayList<Process>();
 		int tt=100, count=0;
 
-		Collections.sort(processes, SORT_BY_BURSTTIME);
+		Collections.sort(processes, SORT_BY_ARRIVALTIME);
 
 		while(count<tt)
 		{
@@ -29,12 +29,23 @@ class SJf
 				else break;
 			}
 
-			if(q.size()!=0)
+			for (int i = 0 ; i < q.size(); i++)
 			{
-				q.get(0).waitTime=count-arrivalTime;
-				q.get(0).turnAroundTime=q.get(0).burstTime+q.get(i).waitTime;
-				count+=	q.get(0).burstTime;
-				q.remove(0);
+				if (q.get(i).remBurstTime > 0)
+				{
+					if (q.get(i).remBurstTime > quantum)
+					{
+						count += quantum;
+						q.get(i).remBurstTime -= quantum;
+					}
+					else
+					{
+						count+ =  q.get(i).remBurstTime;
+						q.get(i).waitTime = count - q.get(i).burstTime;
+						q.get(i).turnAroundTime=q.get(i).burstTime+q.get(i).waitTime;
+						q.remove(i);
+					}
+				}
 			}
 		}
 	}
